@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-
-import { FooterButton } from '@components/Controllers/FooterButton';
 import { Button } from '@components/Controllers/Button';
+import { FooterButton } from '@components/Controllers/FooterButton';
 import { Input } from '@components/Controllers/Input';
-import { Form, Title, Footer } from './styles';
+import auth from '@react-native-firebase/auth';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Alert } from 'react-native';
+import { Footer, Form, Title } from './styles';
+
+
 
 export function SignInForm() {
   const [email, setEmail] = useState('');
@@ -15,6 +18,14 @@ export function SignInForm() {
 
   function handleSignIn() {
     setIsLoading(true);
+
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        Alert.alert("Logado com sucesso!");
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
   }
 
   function handleForgotPassword() {
