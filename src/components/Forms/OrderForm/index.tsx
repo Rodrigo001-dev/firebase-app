@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 
+import firestore from '@react-native-firebase/firestore';
+
 import { Form, Title } from './styles';
 import { Input } from '@components/Controllers/Input';
 import { Button } from '@components/Controllers/Button';
 import { TextArea } from '@components/Controllers/TextArea';
+import { Alert } from 'react-native';
 
 export function OrderForm() {
   const [patrimony, setPatrimony] = useState('');
@@ -12,6 +15,19 @@ export function OrderForm() {
 
   function handleNewOrder() {
     setIsLoading(true);
+
+    firestore()
+      // criando uma tabela orders
+      .collection('orders')
+      .add({
+        patrimony,
+        description,
+        status: 'open',
+        created_at: firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => Alert.alert("Chamado", "Chamado aberto com sucesso"))
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false))
   }
 
   return (
