@@ -15,6 +15,9 @@ import com.facebook.soloader.SoLoader;
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
 
+import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+
 import com.facebook.react.bridge.JSIModulePackage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -35,6 +38,8 @@ public class MainApplication extends Application implements ReactApplication {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       // Packages that cannot be autolinked yet can be added manually here, for example:
       // packages.add(new MyReactNativePackage());
+      packages.add(new ReactNativeFirebaseAppPackage());
+      packages.add(new RNFirebaseAuthPackage());
       return packages;
     }
 
